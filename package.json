@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "migration:create": "node-pg-migrate create",
+    "migration:up": "node-pg-migrate up",
+    "migration:down": "node-pg-migrate down"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.1.2",
+    "node-pg-migrate": "^9.0.0",
     "nodemon": "^3.1.14",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2"
