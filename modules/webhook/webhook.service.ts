@@ -1,4 +1,7 @@
 import whatsappConfig from "../../config/whatsapp.config";
+import { AIService } from "../ai/ai.service";
+
+const aiService = new AIService();
 
 class WebhookService {
 
@@ -53,6 +56,10 @@ class WebhookService {
         console.log("Message :", text);
         console.log("----------------------");
 
+        const aiResponse = await aiService.chat(text);
+
+        console.log(aiResponse);
+        
         /**
          * Later
          *
