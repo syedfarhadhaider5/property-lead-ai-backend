@@ -1,6 +1,10 @@
 import {
     IntentDetectionResult
 } from "../../types/ai.types";
+import whatsappService from "../../services/whatsapp.service";
+import conversationRepository
+    from "../../repositories/conversation.repository";
+
 
 class ConversationFlow {
 
@@ -46,7 +50,7 @@ class ConversationFlow {
                 return this.handleResume(lead);
 
             case "Out of Context":
-                return this.handleOutOfContext();
+                return this.handleOutOfContext(lead);
 
             case "Spam":
                 return this.handleSpam();
@@ -114,10 +118,27 @@ class ConversationFlow {
         );
     }
 
-    private async handleOutOfContext() {
-
+    private async handleOutOfContext(
+        lead: any
+    ) {
+    
+        const reply =
+            "I can help you with property-related inquiries. Are you looking to buy, sell, rent, or invest in a property?";
+    
+        await conversationRepository.create({
+            leadId: lead.id,
+            sender: "AI",
+            message: reply,
+            messageType: "text"
+        });
+    
+        await whatsappService.sendTextMessage(
+            lead.whatsapp_number,
+            reply
+        );
+    
         console.log(
-            "ACTION: Out of Context → redirect"
+            "ACTION: Out of Context → AI reply saved and sent"
         );
     }
 
